@@ -2,8 +2,10 @@ import { useState } from 'react'
 import './App.css'
 
 
-// 1
-
+/*- 1.- Add Tasks
+  - 2.- Modify tasks
+  - 3.- Delete tasks
+*/
 function App() {
   const [formData, setFormData] = useState({
     title: "",
@@ -11,7 +13,7 @@ function App() {
     isCompleted: false,
   })
 
-  const [taskList, setTaskList] = useState()
+  const [taskList, setTaskList] = useState([])
 
   const  handleChnage = (e)=>{
     setFormData((prev)=>({
@@ -20,8 +22,9 @@ function App() {
     }))
   }
 
-  const addTask = () =>{
+  const addTask = (e) =>{
     // Add task to my list
+    e.preventDefault()
     setTaskList((prev)=> ({...prev, [e.target.name]:e.target.value}))
   }
   console.log(taskList)
@@ -44,20 +47,24 @@ function App() {
         name='desc'
         onChange={handleChnage}
         value={formData.value} />
+        
+        <button onClick={addTask}>Add Task</button>
 
-        <div className="todos">
+      </form>
+
+
+      <div className="todos">
           <ul>
           {
             taskList.map((task, index)=>{
               <li key={index}>
-                Title: {task.title}
+                <p>Title: {task.title}</p>
+                <p>Description: {task.desc}</p>
               </li>
             })
           }
           </ul>
         </div>
-
-      </form>
     </>
   )
 }
