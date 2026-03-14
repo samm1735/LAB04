@@ -1,12 +1,17 @@
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import './App.css'
 
 
 /*- 1.- Add Tasks
-  - 2.- Modify tasks
+  - 2.- Modify tasks (Not necessary)
   - 3.- Delete tasks
   - 4.- Mark as complete
 */
+
+// Use lucide react for the todo app icons
+
+
 function App() {
   const [formData, setFormData] = useState({
     title: "",
@@ -27,6 +32,7 @@ function App() {
     // Add task to my list
     // e.preventDefault()
     // setTaskList((prev)=> ({...prev, [e.target.name]:e.target.value}))
+    const newTask = {id: uuidv4}
     setTaskList((prev)=>[...prev, formData])
     setFormData({title: "", desc: "", isCompleted: false})
   }
@@ -74,7 +80,7 @@ function App() {
                 <p>Description: {task.desc}</p>
                 <p>{task.isCompleted ? "Completed" : "Not Done yet"}</p>
                 <button type="button">MArk as complete</button>
-                <button type="button">Delet</button>
+                <button type="button" onClick={deleteTask}>Delet</button>
               </li>
             ))
           }
