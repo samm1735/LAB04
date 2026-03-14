@@ -32,8 +32,8 @@ function App() {
     // Add task to my list
     // e.preventDefault()
     // setTaskList((prev)=> ({...prev, [e.target.name]:e.target.value}))
-    const newTask = {id: uuidv4}
-    setTaskList((prev)=>[...prev, formData])
+    const newTask = {id: uuidv4(), ...formData}
+    setTaskList((prev)=>[...prev, newTask])
     setFormData({title: "", desc: "", isCompleted: false})
   }
   console.log(taskList)
@@ -48,7 +48,9 @@ function App() {
   }
 
   const markAsCompleteTask = (id) =>{
+    const newTaskList = taskList.map((t)=> t.id ===id ? {...t, isCompleted:  !t.isCompleted} : t )
 
+    setTaskList(newTaskList)
   }
 
 
@@ -79,8 +81,8 @@ function App() {
                 <p>Title: {task.title}</p>
                 <p>Description: {task.desc}</p>
                 <p>{task.isCompleted ? "Completed" : "Not Done yet"}</p>
-                <button type="button">MArk as complete</button>
-                <button type="button" onClick={deleteTask}>Delet</button>
+                <button type="button" onClick={()=> markAsCompleteTask(task.id)}>MArk as complete</button>
+                <button type="button" onClick={()=> deleteTask(task.id)}>Delet</button>
               </li>
             ))
           }
