@@ -26,7 +26,8 @@ function App() {
   const addTask = (e) =>{
     // Add task to my list
     // e.preventDefault()
-    setTaskList((prev)=> ({...prev, [e.target.name]:e.target.value}))
+    // setTaskList((prev)=> ({...prev, [e.target.name]:e.target.value}))
+    setTaskList((prev)=>[...prev, formData])
     setFormData({title: "", desc: "", isCompleted: false})
   }
   console.log(taskList)
@@ -52,12 +53,12 @@ function App() {
         <input type="text"
         name='title'
         onChange={handleChnage}
-        value={formData.value} />
+        value={formData.title} />
         
         <input type="text"
         name='desc'
         onChange={handleChnage}
-        value={formData.value} />
+        value={formData.desc} />
         
         <button type='button' onClick={addTask}>Add Task</button>
 
@@ -67,7 +68,7 @@ function App() {
       <div className="todos">
           <ul>
           {
-            taskList.map((task, index)=>{
+            taskList.map((task, index)=>(
               <li key={index}>
                 <p>Title: {task.title}</p>
                 <p>Description: {task.desc}</p>
@@ -75,9 +76,13 @@ function App() {
                 <button type="button">MArk as complete</button>
                 <button type="button">Delet</button>
               </li>
-            })
+            ))
           }
           </ul>
+        </div>
+
+        <div className="completed-tasks">
+          <h1>Completed</h1>
         </div>
     </>
   )
