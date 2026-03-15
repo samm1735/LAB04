@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import './App.css'
+import { Plus } from 'lucide-react'
 
 
 /*- 1.- Add Tasks
@@ -28,7 +29,7 @@ function App() {
     }))
   }
 
-  const addTask = (e) =>{
+  const addTask = () =>{
     // Add task to my list
     // e.preventDefault()
     // setTaskList((prev)=> ({...prev, [e.target.name]:e.target.value}))
@@ -38,6 +39,7 @@ function App() {
   }
   console.log(taskList)
   
+  // eslint-disable-next-line no-unused-vars
   const updateTask = () =>{
     // Update my list
   }
@@ -68,7 +70,14 @@ function App() {
         onChange={handleChnage}
         value={formData.desc} />
         
-        <button type='button' onClick={addTask}>Add Task</button>
+        <button type='button' onClick={addTask}>
+          <Plus 
+            size={20}
+            color='white'
+          /> 
+          Add Task
+
+        </button>
 
       </form>
 
@@ -81,8 +90,8 @@ function App() {
                 <p>Title: {task.title}</p>
                 <p>Description: {task.desc}</p>
                 <p>{task.isCompleted ? "Completed" : "Not Done yet"}</p>
-                <button type="button" onClick={()=> markAsCompleteTask(task.id)}>MArk as complete</button>
-                <button type="button" onClick={()=> deleteTask(task.id)}>Delet</button>
+                <button type="button" onClick={()=> markAsCompleteTask(task.id)}>{task.isCompleted ? "Mark as Incomplete" : "Mark as Complete"}</button>
+                <button type="button" onClick={()=> deleteTask(task.id)}>Delete</button>
               </li>
             ))
           }
