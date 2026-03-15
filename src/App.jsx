@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import './App.css'
-import { Plus } from 'lucide-react'
+import { CheckCheck, Plus, Trash2, RotateCcw } from 'lucide-react'
 
 
 /*- 1.- Add Tasks
@@ -58,23 +58,25 @@ function App() {
 
 
   return (
-    <>
-      <form >
+    <div className="app">
+
+      <h1>SRI's TO-DO APP</h1>
+   
+      <form>
         <input type="text"
         name='title'
         onChange={handleChnage}
-        value={formData.title} />
+        value={formData.title}
+        placeholder="Enter your task's title" />
         
         <input type="text"
         name='desc'
         onChange={handleChnage}
-        value={formData.desc} />
+        value={formData.desc}
+        placeholder="Enter your task's description" />
         
         <button type='button' onClick={addTask}>
-          <Plus 
-            size={20}
-            color='white'
-          /> 
+          <Plus /> 
           Add Task
 
         </button>
@@ -83,25 +85,60 @@ function App() {
 
 
       <div className="todos">
+        <h1>New Tasks</h1>
           <ul>
+          {/* J'ai utilisé filter pour n'avoir que les taks non completed
+          Les autres tasks seront dans l'autre liste
+           */}
           {
-            taskList.map((task, index)=>(
-              <li key={index}>
-                <p>Title: {task.title}</p>
-                <p>Description: {task.desc}</p>
-                <p>{task.isCompleted ? "Completed" : "Not Done yet"}</p>
-                <button type="button" onClick={()=> markAsCompleteTask(task.id)}>{task.isCompleted ? "Mark as Incomplete" : "Mark as Complete"}</button>
-                <button type="button" onClick={()=> deleteTask(task.id)}>Delete</button>
-              </li>
-            ))
+            taskList
+              .filter(task => !task.isCompleted) 
+              .map((task, index) => (
+                <li key={index}>
+                  <p>Title: {task.title}</p>
+                  <p>Description: {task.desc}</p>
+                  <p>{task.isCompleted ? "Completed" : "Not Complete"}</p>
+                  <button type="button" onClick={() => markAsCompleteTask(task.id)}>
+                    <CheckCheck />
+                  {task.isCompleted ? "Mark as Incomplete" : "Mark as Complete"}
+                  </button>
+                  <button type="button" onClick={() => deleteTask(task.id)}>
+                  <Trash2 />
+                  Delete
+                  </button>
+                </li>
+              ))
           }
           </ul>
         </div>
 
+          {/* J'ai utilisé filter pour n'avoir que les taks completed */}
         <div className="completed-tasks">
           <h1>Completed</h1>
+          <ul>
+          {
+          taskList
+              .filter(task => task.isCompleted)
+              .map((task, index) => (
+                <li key={index}>
+                  <p>Title: {task.title}</p>
+                  <p>Description: {task.desc}</p>
+                  <p>{task.isCompleted ? "Completed" : "Not Complete"}</p>
+                  <button type="button" onClick={() => markAsCompleteTask(task.id)}>
+                  <RotateCcw />
+                  {task.isCompleted ? "Mark as Incomplete" : "Mark as Complete"}
+                  </button>
+                  <button type="button" onClick={() => deleteTask(task.id)}>
+                  <Trash2 />
+                  Delete
+                  </button>
+                </li>
+              ))
+          }
+          </ul>
+
         </div>
-    </>
+    </div>
   )
 }
 
